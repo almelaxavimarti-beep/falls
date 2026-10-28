@@ -1,0 +1,29 @@
+# Integración continua: en cada Pull Request y en cada push a main,
+# GitHub compila Falls y pasa todos los tests en una máquina limpia.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Compilar y probar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v5
+
+      - name: Instalar Java 25 (Temurin)
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: "25"
+
+      - name: Preparar Gradle (y validar el wrapper)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Compilar y pasar los tests
+        run: ./gradlew build
