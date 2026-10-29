@@ -15,6 +15,11 @@ Cada decisión importante del proyecto tiene un número y un archivo. Las decisi
 | [009](009-licencia-mit.md) | Licencia MIT desde el primer commit | Vigente |
 | [010](010-organizacion-y-prioridades.md) | Organización del trabajo y prioridad de los estudios | Vigente |
 | [011](011-gradle.md) | Gradle como herramienta de construcción | Vigente |
+| [012](012-lector-midi-propio.md) | Lector y escritor MIDI propios y completos | Vigente |
+| [013](013-analisis-con-contexto.md) | Análisis con contexto: conflicto, recurso o sugerencia | Vigente |
+| [014](014-estandar-de-calidad.md) | Estándar de calidad | Vigente |
+| [015](015-donde-vive-la-teoria.md) | Teoría como datos, reglas como código, documentación en el repositorio | Vigente |
+| [016](016-sin-servidor.md) | Sin servidor | Vigente |
 
 Plantilla para una decisión nueva:
 
