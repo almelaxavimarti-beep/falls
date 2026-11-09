@@ -12,7 +12,7 @@ class EventosTest {
 
     @Test
     void tempoGuardaSusDatos() {
-        SCambioTempo tempo = new CambioTempo(0, 120.0);
+        CambioTempo tempo = new CambioTempo(0, 120.0);
 
         assertEquals(0, tempo.tick());
         assertEquals(120.0, tempo.bpm());

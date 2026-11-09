@@ -9,9 +9,25 @@ public record Cancion(List<CambioTempo> tempos, List<CambioCompas> compases,
     public static final int TICKS_POR_NEGRA = 960;
 
     public Cancion {
-        // TODO 1: guardar copias que no se puedan modificar de las cuatro listas (List.copyOf)
-        // TODO 2: rechazar tempos, compases o tonalidades que no estén ordenados por tick.
-        //         Pista: un for desde i = 1 que compare cada elemento con el anterior.
-        //         Hay que hacerlo para las tres listas.
+        tempos = List.copyOf(tempos);
+        compases = List.copyOf(compases);
+        tonalidades = List.copyOf(tonalidades);
+        pistas = List.copyOf(pistas);
+
+        for (int i = 1; i < tempos.size(); i++) {
+            if (tempos.get(i).tick() < tempos.get(i - 1).tick()) {
+                throw new IllegalArgumentException("Los cambios de tempo no están ordenados por tick");
+            }
+        }
+        for (int i = 1; i < compases.size(); i++) {
+            if (compases.get(i).tick() < compases.get(i - 1).tick()) {
+                throw new IllegalArgumentException("Los cambios de compás no están ordenados por tick");
+            }
+        }
+        for (int i = 1; i < tonalidades.size(); i++) {
+            if (tonalidades.get(i).tick() < tonalidades.get(i - 1).tick()) {
+                throw new IllegalArgumentException("Los cambios de tonalidad no están ordenados por tick");
+            }
+        }
     }
 }
