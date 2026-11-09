@@ -6,8 +6,14 @@ public record PitchBend(long tick, int canal, int valor) {
     public static final int CENTRO = 8192;
 
     public PitchBend {
-        // TODO 1: rechazar tick negativo
-        // TODO 2: rechazar canal fuera de 0-15
-        // TODO 3: rechazar valor fuera de 0-16383
+        if (tick < 0) {
+            throw new IllegalArgumentException("Tick negativo: " + tick);
+        }
+        if (canal < 0 || canal > 15) {
+            throw new IllegalArgumentException("Canal fuera de rango (0-15): " + canal);
+        }
+        if (valor < 0 || valor > 16383) {
+            throw new IllegalArgumentException("Pitch bend fuera de rango (0-16383): " + valor);
+        }
     }
-}
+    }
