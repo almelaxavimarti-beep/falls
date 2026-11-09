@@ -86,4 +86,13 @@ public final class LectorBytes {
         }
         posicion += cantidad;
     }
+    /** Lee los bytes indicados tal cual (por ejemplo, los datos de un metaevento). */
+    public byte[] leerBytes(int cantidad) throws ArchivoMidiCorruptoException {
+        if (restantes() < cantidad) {
+            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
+        }
+        byte[] resultado = java.util.Arrays.copyOfRange(datos, posicion, posicion + cantidad);
+        posicion += cantidad;
+        return resultado;
+    }
 }
