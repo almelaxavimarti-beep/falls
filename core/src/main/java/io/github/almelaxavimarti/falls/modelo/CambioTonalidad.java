@@ -7,7 +7,11 @@ package io.github.almelaxavimarti.falls.modelo;
 public record CambioTonalidad(long tick, int alteraciones, boolean menor) {
 
     public CambioTonalidad {
-        // TODO 1: rechazar tick negativo
-        // TODO 2: rechazar alteraciones fuera de -7 a 7
+        if (tick < 0) {
+            throw new IllegalArgumentException("Tick negativo: " + tick);
+        }
+        if (alteraciones < -7 || alteraciones > 7) {
+            throw new IllegalArgumentException("Alteraciones fuera de rango (-7 a 7): " + alteraciones);
+        }
     }
 }
