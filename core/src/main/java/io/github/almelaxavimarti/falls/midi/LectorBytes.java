@@ -95,4 +95,9 @@ public final class LectorBytes {
         posicion += cantidad;
         return resultado;
     }
+    public String mirarTexto(int longitud) throws ArchivoMidiCorruptoException {
+        String texto = leerTexto(longitud);
+        posicion -= longitud;
+        return texto;
+    }
 }
