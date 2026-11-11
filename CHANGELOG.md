@@ -16,3 +16,4 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 - Lectura de pistas MIDI (`LectorPista`): eventos de canal y metaeventos con su tick absoluto, running status, SysEx ignorados y errores con la posición del byte.
 - Conversión de eventos MIDI al modelo (`ConversorPista`): notas con su duración (incluidas solapadas, sin final y de duración cero), controladores, pitch bend, nombre, tempo, compás y tonalidad, todo pasado a 960 ticks por negra.
 - Lector MIDI completo (`LectorMidiEstandar`): lee archivos de formato 0 y 1, salta bloques desconocidos, separa el formato 0 en una pista por canal y junta los cambios de tempo, compás y tonalidad ordenados. Tests con los 6 MIDIs de prueba.
+- `EscritorBytes`: escribe números big-endian, textos ASCII y cantidades de longitud variable (lo contrario de `LectorBytes`).
