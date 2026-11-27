@@ -39,7 +39,15 @@ public record CabeceraMidi(int formato, int numeroPistas, int ticksPorNegra) {
             throw new ArchivoMidiCorruptoException("Cero ticks por negra", posDivision);
         }
 
-        lector.saltar((int) (longitud - 6));
+        // Si la cabecera dice medir más de 6 bytes, el resto se salta (la especificación lo permite).
+        // Se comprueba con long antes de pasarlo a int: un número enorme daría la vuelta a negativo.
+        long sobrante = longitud - 6;
+        if (sobrante > lector.restantes()) {
+            throw new ArchivoMidiCorruptoException("La cabecera dice medir " + longitud
+                    + " bytes, pero el archivo se acaba antes", posLongitud);
+        }
+        lector.saltar((int) sobrante);
         return new CabeceraMidi(formato, numeroPistas, division);
     }
 }
+
