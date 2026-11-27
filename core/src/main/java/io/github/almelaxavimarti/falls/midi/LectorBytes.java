@@ -1,6 +1,7 @@
 package io.github.almelaxavimarti.falls.midi;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 /**
  * Lee los bytes de un archivo MIDI de uno en uno, llevando la cuenta de por dónde va.
@@ -28,9 +29,7 @@ public final class LectorBytes {
 
     /** Lee 1 byte sin signo (0-255). */
     public int leerUint8() throws ArchivoMidiCorruptoException {
-        if (restantes() < 1) {
-            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
-        }
+        comprobarQueQuedan(1);
         int valor = datos[posicion] & 0xFF;
         posicion++;
         return valor;
@@ -54,11 +53,16 @@ public final class LectorBytes {
 
     /** Lee un texto ASCII de la longitud indicada (por ejemplo "MThd"). */
     public String leerTexto(int longitud) throws ArchivoMidiCorruptoException {
-        if (restantes() < longitud) {
-            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
-        }
+        comprobarQueQuedan(longitud);
         String texto = new String(datos, posicion, longitud, StandardCharsets.US_ASCII);
         posicion += longitud;
+        return texto;
+    }
+
+    /** Mira el texto que viene sin avanzar (para saber qué bloque es antes de leerlo). */
+    public String mirarTexto(int longitud) throws ArchivoMidiCorruptoException {
+        String texto = leerTexto(longitud);
+        posicion -= longitud;
         return texto;
     }
 
@@ -81,23 +85,28 @@ public final class LectorBytes {
 
     /** Se salta los bytes indicados. */
     public void saltar(int cantidad) throws ArchivoMidiCorruptoException {
-        if (restantes() < cantidad) {
-            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
-        }
+        comprobarQueQuedan(cantidad);
         posicion += cantidad;
     }
+
     /** Lee los bytes indicados tal cual (por ejemplo, los datos de un metaevento). */
     public byte[] leerBytes(int cantidad) throws ArchivoMidiCorruptoException {
-        if (restantes() < cantidad) {
-            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
-        }
-        byte[] resultado = java.util.Arrays.copyOfRange(datos, posicion, posicion + cantidad);
+        comprobarQueQuedan(cantidad);
+        byte[] resultado = Arrays.copyOfRange(datos, posicion, posicion + cantidad);
         posicion += cantidad;
         return resultado;
     }
-    public String mirarTexto(int longitud) throws ArchivoMidiCorruptoException {
-        String texto = leerTexto(longitud);
-        posicion -= longitud;
-        return texto;
+
+    /**
+     * Comprueba que se pueden leer esos bytes. Una cantidad negativa nunca viene del archivo:
+     * sería un fallo de Falls, así que se para en seco con IllegalArgumentException.
+     */
+    private void comprobarQueQuedan(int cantidad) throws ArchivoMidiCorruptoException {
+        if (cantidad < 0) {
+            throw new IllegalArgumentException("Cantidad de bytes negativa: " + cantidad);
+        }
+        if (restantes() < cantidad) {
+            throw new ArchivoMidiCorruptoException("El archivo se acaba antes de tiempo", posicion);
+        }
     }
 }

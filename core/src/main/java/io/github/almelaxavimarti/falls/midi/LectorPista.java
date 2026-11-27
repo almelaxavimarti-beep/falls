@@ -27,8 +27,9 @@ public final class LectorPista {
         List<EventoMidi> eventos = new ArrayList<>();
         long tick = 0;
         int ultimoEstado = 0;
+        boolean terminada = false;
 
-        while (lector.posicion() < fin) {
+        while (!terminada && lector.posicion() < fin) {
             tick += lector.leerCantidadVariable();
             int posEvento = lector.posicion();
             int b = lector.leerUint8();
@@ -39,9 +40,7 @@ public final class LectorPista {
                 int largo = lector.leerCantidadVariable();
                 byte[] datos = lector.leerBytes(largo);
                 eventos.add(new EventoMeta(tick, tipo, datos));
-                if (tipo == EventoMeta.FIN_DE_PISTA) {
-                    break;
-                }
+                terminada = tipo == EventoMeta.FIN_DE_PISTA;
             } else if (b == 0xF0 || b == 0xF7) {
                 // SysEx: Falls no lo usa, se salta. Anula el running status.
                 int largo = lector.leerCantidadVariable();

@@ -20,6 +20,7 @@ Cada decisión importante del proyecto tiene un número y un archivo. Las decisi
 | [014](014-estandar-de-calidad.md) | Estándar de calidad | Vigente |
 | [015](015-donde-vive-la-teoria.md) | Teoría como datos, reglas como código, documentación en el repositorio | Vigente |
 | [016](016-sin-servidor.md) | Sin servidor | Vigente |
+| [017](017-pruebas-de-propiedades-propias.md) | Tests de propiedades con un generador propio (sin jqwik) | Vigente |
 
 Plantilla para una decisión nueva:
 

@@ -18,3 +18,4 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/); v
 - Lector MIDI completo (`LectorMidiEstandar`): lee archivos de formato 0 y 1, salta bloques desconocidos, separa el formato 0 en una pista por canal y junta los cambios de tempo, compás y tonalidad ordenados. Tests con los 6 MIDIs de prueba.
 - `EscritorBytes`: escribe números big-endian, textos ASCII y cantidades de longitud variable (lo contrario de `LectorBytes`).
 - Escritor MIDI propio (`EscritorMidiEstandar`): formato 1 a 960 ticks por negra con pista de tempo; escribir y releer da la misma canción (probado también con los 6 MIDIs de prueba).
+- Tests de propiedades con canciones al azar (decisión 017) y arreglo de dos fallos del lector con archivos corruptos: una cabecera o un fin de pista con longitudes imposibles hacían retroceder al lector.
